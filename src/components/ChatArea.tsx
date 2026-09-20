@@ -5,9 +5,18 @@ import ChatInput from './ChatInput'
 interface ChatAreaProps {
   conversation: Conversation
   onSend: (text: string) => void
+  isGenerating: boolean
+  onStop: () => void
+  onRetry: (convId: string, messageId: string) => void
 }
 
-export default function ChatArea({ conversation, onSend }: ChatAreaProps) {
+export default function ChatArea({
+  conversation,
+  onSend,
+  isGenerating,
+  onStop,
+  onRetry,
+}: ChatAreaProps) {
   const isEmpty = conversation.messages.length === 0
 
   return (
@@ -20,9 +29,12 @@ export default function ChatArea({ conversation, onSend }: ChatAreaProps) {
           <p>开始新的对话吧</p>
         </div>
       ) : (
-        <MessageList messages={conversation.messages} />
+        <MessageList
+          messages={conversation.messages}
+          onRetry={messageId => onRetry(conversation.id, messageId)}
+        />
       )}
-      <ChatInput onSend={onSend} />
+      <ChatInput onSend={onSend} isGenerating={isGenerating} onStop={onStop} />
     </main>
   )
 }

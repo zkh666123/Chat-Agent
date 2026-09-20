@@ -1,6 +1,7 @@
 import type { Conversation } from '../types'
 import MessageList from './MessageList'
 import ChatInput from './ChatInput'
+import EmptyState from './EmptyState'
 
 interface ChatAreaProps {
   conversation: Conversation
@@ -25,9 +26,7 @@ export default function ChatArea({
         <span className="chat-header-title">{conversation.title}</span>
       </header>
       {isEmpty ? (
-        <div className="empty-placeholder">
-          <p>开始新的对话吧</p>
-        </div>
+        <EmptyState onPick={onSend} />
       ) : (
         <MessageList
           messages={conversation.messages}

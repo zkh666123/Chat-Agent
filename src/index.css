@@ -338,14 +338,70 @@ body {
   color: #fff;
 }
 
-/* ===== 空状态占位（S5 完善） ===== */
-.empty-placeholder {
+/* ===== 空状态：问候语 + 快捷提问卡片 ===== */
+.empty-state {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--text-3);
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.empty-title {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.empty-subtitle {
+  margin: 0 0 32px;
+  color: var(--text-2);
   font-size: 15px;
+  text-align: center;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.quick-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s,
+    transform 0.15s;
+}
+
+.quick-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(30, 111, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.quick-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.quick-desc {
+  font-size: 13px;
+  color: var(--text-3);
 }
 
 /* ===== 底部输入区 ===== */

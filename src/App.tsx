@@ -8,6 +8,7 @@ function App() {
   const [conversations, setConversations] = useState<Conversation[]>(initialConversations)
   const [activeId, setActiveId] = useState(initialConversations[0].id)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const conversationsRef = useRef(conversations)
   useEffect(() => {
@@ -27,6 +28,15 @@ function App() {
       if (streamRef.current?.startTimer != null) clearTimeout(streamRef.current.startTimer)
       if (streamRef.current?.interval != null) clearInterval(streamRef.current.interval)
     }
+  }, [])
+
+  // 移动端：按 Esc 关闭侧边栏
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSidebarOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
   const activeConversation = conversations.find(c => c.id === activeId) ?? conversations[0]
@@ -119,9 +129,13 @@ function App() {
     }
     setConversations(prev => [conv, ...prev])
     setActiveId(conv.id)
+    setSidebarOpen(false)
   }
 
-  const handleSelect = (id: string) => setActiveId(id)
+  const handleSelect = (id: string) => {
+    setActiveId(id)
+    setSidebarOpen(false)
+  }
 
   const handleSend = (text: string) => {
     if (isGenerating) return
@@ -223,8 +237,10 @@ function App() {
       <Sidebar
         conversations={conversations}
         activeId={activeId}
+        open={sidebarOpen}
         onNewChat={handleNewChat}
         onSelect={handleSelect}
+        onClose={() => setSidebarOpen(false)}
       />
       <ChatArea
         conversation={activeConversation}
@@ -232,6 +248,7 @@ function App() {
         isGenerating={isGenerating}
         onStop={handleStop}
         onRetry={handleRetry}
+        onOpenSidebar={() => setSidebarOpen(true)}
       />
     </div>
   )

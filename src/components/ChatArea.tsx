@@ -9,6 +9,7 @@ interface ChatAreaProps {
   isGenerating: boolean
   onStop: () => void
   onRetry: (convId: string, messageId: string) => void
+  onOpenSidebar: () => void
 }
 
 export default function ChatArea({
@@ -17,13 +18,33 @@ export default function ChatArea({
   isGenerating,
   onStop,
   onRetry,
+  onOpenSidebar,
 }: ChatAreaProps) {
   const isEmpty = conversation.messages.length === 0
 
   return (
     <main className="chat-area">
       <header className="chat-header">
-        <span className="chat-header-title">{conversation.title}</span>
+        <button
+          type="button"
+          className="sidebar-toggle"
+          onClick={onOpenSidebar}
+          aria-label="打开会话列表"
+        >
+          <svg
+            viewBox="0 0 16 16"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <path d="M2 4h12M2 8h12M2 12h12" />
+          </svg>
+        </button>
+        <span className="chat-header-title ellipsis">{conversation.title}</span>
       </header>
       {isEmpty ? (
         <EmptyState onPick={onSend} />

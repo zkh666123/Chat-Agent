@@ -135,6 +135,9 @@ interface Conversation {
 ## Git 提交历史
 
 ```
+fee2755 feat: 实现移动端侧边栏抽屉与响应式布局
+9f5fc69 fix: 修复切换会话后消息列表滚动位置不重置的问题
+693c14a docs: 补充项目 README（启动方式/技术选型/目录结构/Mock 数据）
 1131ade feat: 实现空状态与历史记录
 8ffddee feat: 实现流式输出与交互控制
 153d512 feat: 实现消息发送与 mock AI 回复（关键词匹配）

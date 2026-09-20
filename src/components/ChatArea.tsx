@@ -29,6 +29,7 @@ export default function ChatArea({
         <EmptyState onPick={onSend} />
       ) : (
         <MessageList
+          key={conversation.id}
           messages={conversation.messages}
           onRetry={messageId => onRetry(conversation.id, messageId)}
         />

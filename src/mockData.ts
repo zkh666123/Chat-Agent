@@ -88,10 +88,28 @@ export const initialConversations: Conversation[] = [
 
 /** AI 自动回复池（mock） */
 export const aiReplyPool: string[] = [
-  '好的，我来帮你分析这个问题。\n\n**核心思路**是分三步走：\n1. 明确目标与约束\n2. 拆解为可执行的小任务\n3. 逐步验证并优化\n\n```js\nfunction solve(problem) {\n  const plan = analyze(problem)\n  return plan.map(execute)\n}\n```\n\n如果需要更详细的说明，随时告诉我。',
-  '这是个好问题。\n\n我的理解是：**关键在于把握核心约束**。\n\n- 首先，列出所有限制条件\n- 然后，在约束内寻找最优解\n- 最后，用测试验证可行性\n\n> 提示：可以先从小规模数据开始验证。',
-  '我建议按下面的步骤来做：\n\n| 步骤 | 动作 | 说明 |\n| --- | --- | --- |\n| 1 | 梳理需求 | 明确输入输出 |\n| 2 | 设计接口 | 定义清晰类型 |\n| 3 | 实现核心 | 先跑通主流程 |\n| 4 | 打磨细节 | 再优化体验 |\n\n```ts\ninterface Step {\n  name: string\n  done: boolean\n}\n```',
+  // 0 技术类
+  '好的，这个问题可以从以下几个方面入手：\n\n1. **明确输入与输出**\n2. 拆分核心逻辑\n3. 用代码验证\n\n```ts\nfunction debounce<T extends (...args: never[]) => void>(\n  fn: T,\n  delay = 300,\n) {\n  let timer: ReturnType<typeof setTimeout>\n  return (...args: Parameters<T>) => {\n    clearTimeout(timer)\n    timer = setTimeout(() => fn(...args), delay)\n  }\n}\n```\n\n如果还需要更详细的说明，随时告诉我。',
+  // 1 写作/总结类
+  '好的，我帮你整理一份**周报模板**：\n\n## 本周工作\n\n- **项目 A**：完成核心模块开发与联调\n- **项目 B**：修复线上问题 3 个，编写回归用例\n- **团队**：参与技术方案评审，输出 2 份文档\n\n## 下周计划\n\n1. 推进项目 A 的性能优化\n2. 补充自动化测试覆盖\n\n需要的话我可以帮你填入具体内容。',
+  // 2 计划/方案类
+  '我建议按下面的路线推进：\n\n| 阶段 | 重点 | 产出 |\n| --- | --- | --- |\n| 基础 | 掌握核心概念 | 能独立写 demo |\n| 进阶 | 理解原理与生态 | 完成一个中型项目 |\n| 实战 | 参与开源/项目 | 形成自己的作品集 |\n\n> 提示：学习时**边做边学**效率最高。',
 ]
+
+/** 按用户输入关键词匹配 AI 回复，匹配不到返回随机默认回复 */
+export function pickAiReply(input: string): string {
+  const text = input.toLowerCase()
+  if (/react|前端|typescript|javascript|代码|函数|防抖|组件|js/.test(text)) {
+    return aiReplyPool[0]
+  }
+  if (/周报|总结|报告|文档|ppt/.test(text)) {
+    return aiReplyPool[1]
+  }
+  if (/计划|步骤|方案|路线|学习|建议/.test(text)) {
+    return aiReplyPool[2]
+  }
+  return aiReplyPool[Math.floor(Math.random() * aiReplyPool.length)]
+}
 
 /** 模拟失败的回复内容（用于演示发送失败 + 重试） */
 export const failReply =
